@@ -1,0 +1,4 @@
+{
+    "db": "postgres://user:password@127.0.0.0:5432/amagi",
+    "migration-filename-format": "utc"
+  }
