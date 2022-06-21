@@ -15,6 +15,7 @@ describe("Graphql", () => {
             mutation{
                 createBook(
                     book: {
+                        id: "1",
                         title: "War & Peace",
                         author: "Joe Mama"
                     }
@@ -39,7 +40,7 @@ describe("Graphql", () => {
     const mutation = `
     mutation{
         updateBook(
-            id: 2,
+            id: 1,
             book: {
                 title: "Bible",
                 author: "God"
@@ -54,6 +55,28 @@ describe("Graphql", () => {
       .expect(200)
       .end((err, res) => {
         expect(res.body.data.updateBook.id).to.not.undefined;
+      });
+  });
+
+  it("get a book", async () => {
+    const mutation = `
+    query{
+        book(
+            id: 1,
+            book: {
+                title: "Bible",
+                author: "God"
+            }
+        ){id}
+    }`;
+    request(server)
+      .get("/graphql")
+      .send({
+        query: mutation,
+      })
+      .expect(200)
+      .end((err, res) => {
+        expect(res.body.data.book.id).to.not.undefined;
       });
   });
 });
