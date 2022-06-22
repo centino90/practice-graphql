@@ -1,33 +1,30 @@
-import PgAsync from 'pg-async';
-import once from 'once';
-import dotenv from 'dotenv-safe'
-dotenv.load()
+import knex from "knex";
+import once from "once";
+import dotenv from "dotenv-safe";
+dotenv.load();
 
 async function setup(pg, schema) {
-  await pg.transaction(async (tx) => {
-    const { drop, create } = schema[0];
+  const { drop, create } = schema[0];
 
-    if (drop) {
-      for (const q of drop) {
-        await tx.query(q);
-      }
+  if (drop) {
+    for (const q of drop) {
+      await pg.raw(q);
     }
+  }
 
-    if (create) {
-      for (const q of create) {
-        console.log('@@@@@@@@@@@CREATED@@@@@@@@@@@')
-        await tx.query(q);
-      }
+  if (create) {
+    for (const q of create) {
+      await pg.raw(q);
     }
-  });
+  }
 }
 
 const dbUri = process.env["DB_URI"];
 
 export function postgresMiddleware(uri = dbUri, schemas = []) {
-  const pg = new PgAsync({connectionString: uri})
-  const setupSchema = once(setup)
-  
+  const pg = knex({connection: `postgres://user:password@database/amagi`, client: 'pg'})
+  const setupSchema = once(setup);
+
   return async (ctx, next) => {
     await setupSchema(pg, schemas);
 
