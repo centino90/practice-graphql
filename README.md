@@ -8,11 +8,11 @@ Practice the following:
 # COMMANDS
 - Main terminal: docker compose up
     run the servers (Development)
-- Second terminal: docker exec -it 3895ee092874 npm run migrate
+- Second terminal: docker exec -it <container_id> npm run migrate
     run the migrations
-- Third terminal: docker exec -it 3895ee092874 npm run test
+- Third terminal: docker exec -it <container_id> npm run test
     run default tests
-- Fourth terminal: docker exec -it 3895ee092874 npm run test:ci
+- Fourth terminal: docker exec -it <container_id> npm run test:ci
     run tests with nyan reporter
 # TODO
 - migrate to node 16, knex
@@ -23,6 +23,6 @@ Practice the following:
 - make authentication/authorization work
 - make migrations work in containeriazed database
 
-
-# OLD CAMMANDS
-./node_modules/.bin/node-pg-migrate up
+### LOCAL VARIABLES (not important)
+- Container: 3895ee092874
+- Old migration script: ./node_modules/.bin/node-pg-migrate up
