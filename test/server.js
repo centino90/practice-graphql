@@ -28,6 +28,6 @@ app.use(postgresMiddleware(config.db_uri, schemas));
 
 server.applyMiddleware({ app });
 
-module.exports =  app.listen({ port: config.port }, () => {
+app.listen({ port: config.port }, () => {
   console.log(`Server up at http://localhost:4000${server.graphqlPath}`);
 });

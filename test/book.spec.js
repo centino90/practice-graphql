@@ -1,12 +1,9 @@
 import chai, { expect } from "chai";
 import chaiSubset from "chai-subset";
-const server = require("./server");
 
 const url = `http://localhost:4000`;
 
 let request = require("supertest")(url);
-
-console.log(request);
 
 describe("Graphql", () => {
   it("creates books", async () => {
