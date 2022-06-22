@@ -2,14 +2,13 @@ import Koa from "koa";
 import { ApolloServer } from "apollo-server-koa";
 import dotenv from "dotenv-safe";
 
-import { postgres, postgresMiddleware } from "../src/postgres";
-import resolvers from "../src/resolvers";
-import typeDefs from "../src/types";
-import AuthDirective from "../src/directives/auth";
+import { postgresMiddleware } from "~/postgres";
+import resolvers from "~/resolvers";
+import typeDefs from "~/types";
 
-import { schema, booksSchema } from "../src/models/books";
+import { schema as bookSchema } from "../src/models/books";
 
-const schemas = [booksSchema];
+const schemas = [bookSchema];
 
 dotenv.load();
 

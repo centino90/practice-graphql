@@ -1,13 +1,12 @@
 import chai, { expect } from "chai";
 import chaiSubset from "chai-subset";
-import Koa from "koa";
 const server = require("./server");
 
-// const uri = `http://localhost:4000`;
+const url = `http://localhost:4000`;
 
-let request = require("supertest");
+let request = require("supertest")(url);
 
-console.log(request.Test);
+console.log(request);
 
 describe("Graphql", () => {
   it("creates books", async () => {
@@ -24,7 +23,7 @@ describe("Graphql", () => {
                     ... on CreateBookError{message}
                 }
             }`;
-    request(server)
+    request
       .post("/graphql")
       .send({
         query: mutation,
@@ -47,7 +46,7 @@ describe("Graphql", () => {
             }
         ){id}
     }`;
-    request(server)
+    request
       .post("/graphql")
       .send({
         query: mutation,
@@ -69,7 +68,7 @@ describe("Graphql", () => {
             }
         ){id}
     }`;
-    request(server)
+    request
       .get("/graphql")
       .send({
         query: mutation,

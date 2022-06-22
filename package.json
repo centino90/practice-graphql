@@ -35,7 +35,7 @@
     },
     "scripts": {
         "start": "nodemon src/index.js --exec babel-node --dev",
-        "migrate": "./node_modules/.bin/node-pg-migrate up",
+        "migrate": "nodemon src/scripts/updateSchemas.js --exec babel-node --dev",
         "test": "NODE_ENV=testing ./node_modules/.bin/mocha --compilers js:babel-core/register --slow 1000 --timeout 15000 --recursive --reporter nyan test",
         "test:ci": "NODE_ENV=testing ./node_modules/.bin/mocha --compilers js:babel-core/register --slow 1000 --timeout 15000 --recursive test"
     }

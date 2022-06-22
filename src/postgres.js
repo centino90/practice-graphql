@@ -6,7 +6,6 @@ dotenv.load()
 async function setup(pg, schema) {
   await pg.transaction(async (tx) => {
     const { drop, create } = schema[0];
-    console.log('yea', create)
 
     if (drop) {
       for (const q of drop) {

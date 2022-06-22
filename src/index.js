@@ -8,14 +8,11 @@ import resolvers from "./resolvers";
 import typeDefs from "./types";
 import AuthDirective from "./directives/auth";
 
-import { schema, booksSchema } from "./models/books";
+import { schema as bookSchema } from "./models/books";
 
-import Books from "./models/books";
+// import updateSchema from './scripts/updateSchemas'
 
-import squel from "squel";
-const sq = squel.useFlavour("postgres");
-
-const schemas = [schema];
+const schemas = [bookSchema];
 
 dotenv.load();
 
@@ -45,6 +42,10 @@ const server = new ApolloServer({
 const app = new Koa();
 app.use(postgresMiddleware(config.db_uri, schemas));
 app.use(logger());
+app.use(async (ctx, next) => {
+  console.log("POSTGTES", postgres);
+  await next();
+});
 server.applyMiddleware({ app });
 
 app.listen({ port: config.port }, () => {

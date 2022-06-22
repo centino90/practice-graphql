@@ -1,6 +1,7 @@
-const PgAsync = require("pg-async");
-const dotenv = require("dotenv-safe");
-const pgm = require("node-pg-migrate");
+import PgAsync from "pg-async";
+import dotenv from "dotenv-safe";
+import pgm from "node-pg-migrate";
+import { postgres } from "../postgres";
 dotenv.load();
 
 const ignoredSchemas = [
@@ -16,14 +17,17 @@ const ignoredSchemas = [
 const dbUri = process.env["DB_URI"];
 
 async function updateSchemas() {
-  console.log(PgAsync);
+  // const pg = new PgAsync(postgres);
   const pg = new PgAsync({ connectionString: dbUri });
-  console.log(pg);
+
   const { rows } = await pg.query(
     "SELECT schema_name FROM information_schema.schemata"
   );
   const schemas = rows.map((row) => row.schema_name);
   const filtered = schemas.filter((schema) => !ignoredSchemas.includes(schema));
+
+  console.log("SCHEMAS", schemas);
+  console.log("FILTERED_SCHEMAS", filtered);
 
   for (let i = 0; i < filtered.length; i++) {
     console.log(`** MIGRATING ${filtered[i]} **`);
