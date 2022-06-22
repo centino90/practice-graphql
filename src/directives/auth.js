@@ -18,16 +18,18 @@ export default class AuthDirective extends SchemaDirectiveVisitor {
     field.resolve = async (...args) => {
       const context = args[2];
       const token = verifyToken(context);
-      // console.log('TOKEN', token)
+
       if (!token) {
-        // throw new AuthenticationError("Unauthenticated");
+        throw new AuthenticationError("Unauthenticated1");
       }
 
-      // const { scope } = this.args;
-      // const tokenScopes = parseScopes(token);
-      // if (!tokenScopes || !tokenScopes.includes(scope)) {
-      //   throw new ForbiddenError("Unauthorized");
-      // }
+      const { scope } = this.args; // {scope} is from @auth(scope: "some:scope")
+      const tokenScopes = parseScopes(token); // token should contain the scopes property
+ 
+      if (!tokenScopes || !tokenScopes.includes(scope)) {
+        throw new ForbiddenError("Unauthorized");
+      }
+
       return resolve.apply(this, args);
     };
   }
